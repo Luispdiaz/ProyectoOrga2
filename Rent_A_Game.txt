@@ -1,2 +1,0 @@
-aaaaaa12,Sonic,30,0,EN STOCK
-qwerty21,Cod,30,0,EN STOCK

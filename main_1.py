@@ -7,26 +7,28 @@ def leer(base_de_datos,indices):
     if data.read() == "" :
         base_de_datos = { "primero": [], "segundo": [], "tercero": []}
     else:
-        data = open("Rent_A_Game.txt", "r")
+        data = open("Index.txt", "r")
         for x in data:
             i = 0
-            juego = Juego(x.split(",")[i],x.split(",")[i+1],x.split(",")[i+2],x.split(",")[i+3],x.split(",")[i+4])
-            
-            data = open("Index.txt", "r")
-            if data.read() == "":
-                indices = {}
-            else:
-                data = open("Index.txt", "r")
-                for x in data:
-                    i = 0
-                    indices[x.split(",")[i]] = x.split(",")[i+1],x.split(",")[i+2]
-                    if x.split(",")[i+1] == "0":
+            indices[x.split(",")[i]] = x.split(",")[i+1],x.split(",")[i+2]
+
+        data = open("Rent_A_Game.txt", "r")
+        for x in data:
+            for w, y in indices.items():
+                i = 0
+                juego = Juego(x.split(",")[i],x.split(",")[i+1],x.split(",")[i+2],x.split(",")[i+3],x.split(",")[i+4])
+                if juego.titulo == w:
+                    if indices[juego.titulo][0] == "0":
                         base_de_datos["primero"].append(juego)
-                    if x.split(",")[i+1] == "1":
+                    elif indices[juego.titulo][0] == "1":
                         base_de_datos["segundo"].append(juego)
-                    if x.split(",")[i+1] == "2":
+                    else:
                         base_de_datos["tercero"].append(juego)
-            
+
+        
+
+        print(indices)
+        print(base_de_datos)            
 
 
 
@@ -64,7 +66,7 @@ def registro(base_de_datos,indices):
     overflow = "0"
     status = "EN STOCK"
 
-    juego = Juego(modelo,titulo,precio,overflow,status)
+    juego = Juego(modelo,titulo,precio,status,overflow)
 
     hashing = Hash_Function(modelo)
     indice = hashing.Hash_func(modelo)
@@ -137,26 +139,27 @@ def busqueda(base_de_datos, indices):
             for x, y in indices.items():
                 if x == titulo:
                     encontrado = True
-                    if str(y[0]) == str(0):
+                    if str(y[0]) == str(0) or str(y[0]) == "primero" :
                         a = "primero"
                         b = y[1]
-                    elif str(y[0]) == str(1):
+                    elif str(y[0]) == str(1) or str(y[0]) == "segundo":
                         a = "segundo"
                         b = y[1]
-                    elif str(y[0]) == str(2):
+                    elif str(y[0]) == str(2) or str(y[0]) == "tercero":
                         a = "tercero"
                         b = y[1]
                 else:
                     encontrado = False
 
             if encontrado == True:
-                print(base_de_datos[a][int(b)].mostrar())
+                base_de_datos[a][int(b)].mostrar()
                 break
             else:
                 print("No se pudo conseguir el titulo")
                 break
                 
 def alquiler(base_de_datos):
+    print(base_de_datos)
     print("Lista de Juegos:\n")
     for x, y in base_de_datos.items():
         for i in range(0, len(y)):
@@ -263,7 +266,6 @@ indices = {}
 def main():
     leer(base_de_datos,indices)
     print("Bienvenido al sistema de registro de Rent - A - Game")
-    print()
     while True:
         opcion = input("Ingresa la operación que deseas realizar: \n1.Insertar un nuevo juego \n2.Búsqueda de un juego \n3.Alquiler de un juego \n4.Devolución de un juego \n5.Eliminación de un juego \n6.Salir \n>")
         while not opcion.isnumeric() or int(opcion) not in range(1,7):

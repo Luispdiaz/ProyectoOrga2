@@ -473,7 +473,6 @@ indices = {}
 """ Modulo Main """
 def main():
     print("Bienvenido al sistema de registro de Rent - A - Game")
-    print()
     while True:
         opcion = input("Ingresa la operación que deseas realizar: \n1.Insertar un nuevo juego \n2.Búsqueda de un juego \n3.Alquiler de un juego \n4.Devolución de un juego \n5.Eliminación de un juego \n6.Salir \n>")
         while not opcion.isnumeric() or int(opcion) not in range(1,7):
