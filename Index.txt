@@ -1,1 +1,4 @@
-
+Mario,0,0
+Titan,0,1
+Falling,0,2
+Zelda,3,0

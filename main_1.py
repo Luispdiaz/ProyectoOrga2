@@ -4,8 +4,10 @@ from Juego import Juego
 
 def leer(base_de_datos,indices):
     data = open("Rent_A_Game.txt", "r")
-    if data.read() == "" :
+    data_1 = open("Index.txt", "r")
+    if data.read() == "" and data_1.read() == "":
         base_de_datos = { "primero": [], "segundo": [], "tercero": []}
+        indices = {}
     else:
         data = open("Index.txt", "r")
         for x in data:
@@ -16,22 +18,29 @@ def leer(base_de_datos,indices):
         for x in data:
             for w, y in indices.items():
                 i = 0
-                juego = Juego(x.split(",")[i],x.split(",")[i+1],x.split(",")[i+2],x.split(",")[i+3],x.split(",")[i+4])
+                juego = Juego(x.split(",")[i],x.split(",")[i+1],x.split(",")[i+2],x.split(",")[i+3])
                 if juego.titulo == w:
                     if indices[juego.titulo][0] == "0":
                         base_de_datos["primero"].append(juego)
                     elif indices[juego.titulo][0] == "1":
-                        base_de_datos["segundo"].append(juego)
-                    else:
+                        base_de_datos["segundo"].append(juego)           
+                    elif indices[juego.titulo][0] == "2":
                         base_de_datos["tercero"].append(juego)
-
-        
+                    elif indices[juego.titulo][0] == "3":
+                        base_de_datos["overflow_1"].append(juego)
+                    elif indices[juego.titulo][0] == "4":
+                        base_de_datos["overflow_2"].append(juego)
+                    elif indices[juego.titulo][0] == "5":
+                        base_de_datos["overflow_3"].append(juego)
+                    elif indices[juego.titulo][0] == "6":
+                        base_de_datos["overflow_4"].append(juego)
+                    elif indices[juego.titulo][0] == "7":
+                        base_de_datos["overflow_5"].append(juego)
+                    elif indices[juego.titulo][0] == "8":
+                        base_de_datos["overflow_6"].append(juego)
 
         print(indices)
         print(base_de_datos)            
-
-
-
 
 def registro(base_de_datos,indices):
     while True:
@@ -63,21 +72,84 @@ def registro(base_de_datos,indices):
         print("Error, introduzca un precio válido")
         precio = input("Introduzca el precio del juego: ")
 
-    overflow = "0"
     status = "EN STOCK"
 
-    juego = Juego(modelo,titulo,precio,status,overflow)
+    juego = Juego(modelo,titulo,precio,status)
 
     hashing = Hash_Function(modelo)
     indice = hashing.Hash_func(modelo)
     print(indice)
 
     if int(indice) % 3 == 0:
-        base_de_datos["primero"].append(juego) 
+        if len(base_de_datos["primero"]) < 3:
+            base_de_datos["primero"].append(juego)
+        else:
+            if len(base_de_datos["overflow_1"]) < 3:
+                base_de_datos["overflow_1"].append(juego)
+            else:
+                if len(base_de_datos["overflow_2"]) < 3:
+                    base_de_datos["overflow_2"].append(juego)
+                else:
+                    if len(base_de_datos["overflow_3"]) < 3:
+                        base_de_datos["overflow_3"].append(juego)
+                    else:
+                        if len(base_de_datos["overflow_4"]) < 3:
+                            base_de_datos["overflow_4"].append(juego)
+                        else:
+                            if len(base_de_datos["overflow_5"]) < 3:
+                                base_de_datos["overflow_5"].append(juego)
+                            else:
+                                if len(base_de_datos["overflow_6"]) < 3:
+                                    base_de_datos["overflow_6"].append(juego)
+                                else:
+                                    print("Ya no se pueden ingresar mas juegos.")
+
     elif int(indice) % 3 == 1:
-        base_de_datos["segundo"].append(juego)
+        if len(base_de_datos["segundo"]) < 3:
+            base_de_datos["segundo"].append(juego)
+        else:
+            if len(base_de_datos["overflow_1"]) < 3:
+                base_de_datos["overflow_1"].append(juego)
+            else:
+                if len(base_de_datos["overflow_2"]) < 3:
+                    base_de_datos["overflow_2"].append(juego)
+                else:
+                    if len(base_de_datos["overflow_3"]) < 3:
+                        base_de_datos["overflow_3"].append(juego)
+                    else:
+                        if len(base_de_datos["overflow_4"]) < 3:
+                            base_de_datos["overflow_4"].append(juego)
+                        else:
+                            if len(base_de_datos["overflow_5"]) < 3:
+                                base_de_datos["overflow_5"].append(juego)
+                            else:
+                                if len(base_de_datos["overflow_6"]) < 3:
+                                    base_de_datos["overflow_6"].append(juego)
+                                else:
+                                    print("Ya no se pueden ingresar mas juegos.")
     else:
-        base_de_datos["tercero"].append(juego)
+        if len(base_de_datos["tercero"]) < 3:
+            base_de_datos["tercero"].append(juego)
+        else:
+            if len(base_de_datos["overflow_1"]) < 3:
+                base_de_datos["overflow_1"].append(juego)
+            else:
+                if len(base_de_datos["overflow_2"]) < 3:
+                    base_de_datos["overflow_2"].append(juego)
+                else:
+                    if len(base_de_datos["overflow_3"]) < 3:
+                        base_de_datos["overflow_3"].append(juego)
+                    else:
+                        if len(base_de_datos["overflow_4"]) < 3:
+                            base_de_datos["overflow_4"].append(juego)
+                        else:
+                            if len(base_de_datos["overflow_5"]) < 3:
+                                base_de_datos["overflow_5"].append(juego)
+                            else:
+                                if len(base_de_datos["overflow_6"]) < 3:
+                                    base_de_datos["overflow_6"].append(juego)
+                                else:
+                                    print("Ya no se pueden ingresar mas juegos.")
 
 
     for x, y in base_de_datos.items():
@@ -148,6 +220,24 @@ def busqueda(base_de_datos, indices):
                     elif str(y[0]) == str(2) or str(y[0]) == "tercero":
                         a = "tercero"
                         b = y[1]
+                    elif str(y[0]) == str(3) or str(y[0]) == "overflow_1":
+                        a = "overflow_1"
+                        b = y[1]
+                    elif str(y[0]) == str(4) or str(y[0]) == "overflow_2":
+                        a = "overflow_2"
+                        b = y[1]
+                    elif str(y[0]) == str(5) or str(y[0]) == "overflow_3":
+                        a = "overflow_3"
+                        b = y[1]
+                    elif str(y[0]) == str(6) or str(y[0]) == "overflow_4":
+                        a = "overflow_4"
+                        b = y[1]
+                    elif str(y[0]) == str(7) or str(y[0]) == "overflow_5":
+                        a = "overflow_5"
+                        b = y[1]
+                    elif str(y[0]) == str(8) or str(y[0]) == "overflow_6":
+                        a = "overflow_6"
+                        b = y[1]
                 else:
                     encontrado = False
 
@@ -161,21 +251,24 @@ def busqueda(base_de_datos, indices):
 def alquiler(base_de_datos):
     print(base_de_datos)
     print("Lista de Juegos:\n")
+    j = 0
     for x, y in base_de_datos.items():
         for i in range(0, len(y)):
-            print(f"---------{i+1}--------")
             print(f"Nombre: {y[i].titulo}")
             print(f"Precio: {y[i].precio}")
-            print(f"Status: {y[i].status}\n") 
+            print(f"Status: {y[i].status}") 
+            j += 1
 
-    juego_a = input("Introduzca el numero del juego que desea alquilar: ")
-    while not juego_a.isnumeric() or int(juego_a) > i+1:
-        print("Error, introduzca un indice valido")
-        juego_a = input("Introduzca el numero del juego que desea alquilar: ")
+    titulo = input("Ingrese el título del juego: ").title()
+    while len(titulo) > 10 or not titulo.isalpha() and not titulo.isnumeric():
+        print("Error, el título no puede contener mas de 10 caracteres o no puede tener caracteres especiales")
+        titulo = input("Ingrese el título del juego: ").title()
 
     for x, y in base_de_datos.items():
-        for i in range(0, len(y)):
-            y[int(juego_a)-1].status = "ALQUILADO"
+        for z in y:
+            if z.titulo == titulo:
+                z.status = "ALQUILADO"
+
 
 
 def devoluciones(base_de_datos):
@@ -183,13 +276,18 @@ def devoluciones(base_de_datos):
     encontrado = False
     titulos = []
     for x, y in base_de_datos.items():
-        for i in range(0, len(y)):
-            if y[i].status == "ALQUILADO":
-                encontrado = True
-                print(f"Nombre: {y[i].titulo}")
-                print(f"Precio: {y[i].precio}")
-                print(f"Status: {y[i].status}\n")
-                titulos.append(y[i].titulo)
+        for z in y:
+            if "\n" in z.status:
+                z.status = z.status.replace("\n", "")
+                if z.status == "ALQUILADO":
+                    encontrado = True
+                    z.mostrar()
+                    titulos.append(z.titulo)
+            else:
+                if z.status == "ALQUILADO":
+                    encontrado = True
+                    z.mostrar()
+                    titulos.append(z.titulo)
     
     if encontrado != True:
         print("No hay ningun juego alquilado\n")
@@ -201,30 +299,33 @@ def devoluciones(base_de_datos):
             juego_a = input("Introduzca el nombre del juego que desea devolver: ").title()
 
         for x, y in base_de_datos.items():
-            for i in range(0, len(y)):
-                if y[i].titulo == juego_a:
-                    y[i].status = "EN STOCK"
+            for z in y:
+                if z.titulo == juego_a:
+                    z.status = "EN STOCK"
 
 
 def eliminar(base_de_datos):
     print("Lista de Juegos:\n")
     for x, y in base_de_datos.items():
         for i in range(0, len(y)):
-            print(f"---------{i+1}--------")
             print(f"Nombre: {y[i].titulo}")
             print(f"Precio: {y[i].precio}")
-            print(f"Status: {y[i].status}\n")
+            print(f"Status: {y[i].status}")
 
-    juego_e = input("Introduzca el numero del juego que desea eliminar: ")
-    while not juego_e.isnumeric() or int(juego_e) > i+1:
-        print("Error, introduzca un indice valido")
-        juego_e = input("Introduzca el numero del juego que desea alquilar: ")
+    titulo = input("Ingrese el título del juego: ").title()
+    while len(titulo) > 10 or not titulo.isalpha() and not titulo.isnumeric():
+        print("Error, el título no puede contener mas de 10 caracteres o no puede tener caracteres especiales")
+        titulo = input("Ingrese el título del juego: ").title()
 
     for x, y in base_de_datos.items():
+        i = 0
         for z in y:
-            y.pop(int(juego_e)-1)
-            print("Juego eliminado")
-            break
+            if z.titulo == titulo:
+                y.pop(int(i))
+                print("Juego eliminado")
+                break
+            else:
+                i += 1
 
 def cargar_datos(base_de_datos, indices):
     data = open("Index.txt", "w")
@@ -237,6 +338,19 @@ def cargar_datos(base_de_datos, indices):
             a = 1
         elif y[0] == "tercero":
             a = 2
+        elif y[0] == "overflow_1":
+            a = 3
+        elif y[0] == "overflow_2":
+            a = 4
+        elif y[0] == "overflow_3":
+            a = 5
+        elif y[0] == "overflow_4":
+            a = 6
+        elif y[0] == "overflow_5":
+            a = 7
+        elif y[0] == "overflow_6":
+            a = 8
+        
         if "\n" in str(y[1]):
             b = y[1]
             b = b.replace("\n", "")
@@ -250,8 +364,8 @@ def cargar_datos(base_de_datos, indices):
     data = open("Rent_A_Game.txt", "a")
     for x, y in base_de_datos.items():
         for z in y:
-            if "\n" in z.overflow:
-                z.overflow = z.overflow.replace("\n","")
+            if "\n" in z.status:
+                z.status = z.status.replace("\n","")
                 z.database()
             else:
                 z.database()
@@ -260,17 +374,17 @@ def cargar_datos(base_de_datos, indices):
 
 
 
-base_de_datos = { "primero": [], "segundo": [], "tercero": []}
+base_de_datos = { "primero": [], "segundo": [], "tercero": [], "overflow_1": [], "overflow_2": [], "overflow_3": [], "overflow_4": [], "overflow_5": [], "overflow_6": [] }
 indices = {}
 
 def main():
     leer(base_de_datos,indices)
     print("Bienvenido al sistema de registro de Rent - A - Game")
     while True:
-        opcion = input("Ingresa la operación que deseas realizar: \n1.Insertar un nuevo juego \n2.Búsqueda de un juego \n3.Alquiler de un juego \n4.Devolución de un juego \n5.Eliminación de un juego \n6.Salir \n>")
+        opcion = input("Ingresa la operación que deseas realizar: \n1.Insertar un nuevo juego \n2.Búsqueda de un juego \n3.Alquiler de un juego \n4.Devolución de un juego \n5.Eliminación de un juego \n6.Salir \n> ")
         while not opcion.isnumeric() or int(opcion) not in range(1,7):
             print("Por favor ingrese un número de opción válido")
-            opcion = input("Ingresa la operación que deseas realizar: \n>1.Insertar un nuevo juego \n2.Búsqueda de un juego \n3.Alquiler de un juego \n4.Devolución de un juego \n5.Eliminación de un juego \n6.Cargar datos \n7.Salir \n> ")
+            opcion = input("Ingresa la operación que deseas realizar: \n>1.Insertar un nuevo juego \n2.Búsqueda de un juego \n3.Alquiler de un juego \n4.Devolución de un juego \n5.Eliminación de un juego \n6.Salir \n> ")
         if opcion == "1":
             registro(base_de_datos,indices)
         elif opcion == "2":
@@ -281,9 +395,8 @@ def main():
             devoluciones(base_de_datos)
         elif opcion == "5":
             eliminar(base_de_datos)
-        elif opcion == "6":
-            cargar_datos(base_de_datos,indices)
         else:
+            cargar_datos(base_de_datos,indices)
             print("VUELVA PRONTO")
             break
 main()
