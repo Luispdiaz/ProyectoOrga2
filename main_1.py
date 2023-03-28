@@ -37,10 +37,7 @@ def leer(base_de_datos,indices):
                     elif indices[juego.titulo][0] == "7":
                         base_de_datos["overflow_5"].append(juego)
                     elif indices[juego.titulo][0] == "8":
-                        base_de_datos["overflow_6"].append(juego)
-
-        print(indices)
-        print(base_de_datos)            
+                        base_de_datos["overflow_6"].append(juego)           
 
 def registro(base_de_datos,indices):
     while True:
@@ -62,11 +59,35 @@ def registro(base_de_datos,indices):
                     contador_num += 1
                 elif x.isalpha():
                     contador_letra += 1
-        break
-    titulo = input("Ingrese el título del juego: ").title()
-    while len(titulo) > 10 or not titulo.isalpha() and not titulo.isnumeric():
-        print("Error, el título no puede contener mas de 10 caracteres o no puede tener caracteres especiales")
-        titulo = input("Ingrese el título del juego: ").title() 
+        igual = False
+        for x, y in base_de_datos.items():
+            for z in y:
+                if z.modelo == modelo:
+                    igual = True
+        
+        if igual == True:
+            print("El modelo ya existe")
+        else:
+            break
+
+    while True:
+        titulo = input("Ingrese el título del juego: ").title()
+        while len(titulo) > 10 or not titulo.isalpha() and not titulo.isnumeric():
+            print("Error, el título no puede contener mas de 10 caracteres o no puede tener caracteres especiales")
+            titulo = input("Ingrese el título del juego: ").title() 
+        
+
+        igual = False
+        for x, y in base_de_datos.items():
+            for z in y:
+                if z.titulo == titulo:
+                    igual = True
+        
+        if igual == True:
+            print("El titulo ya existe")
+        else:
+            break
+
     precio = input("Introduzca el precio del juego: ")
     while not precio.isnumeric() or int(precio) not in range(1,1000):
         print("Error, introduzca un precio válido")
