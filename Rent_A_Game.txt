@@ -1,3 +1,0 @@
-aaaaaa12,Mario,30,EN STOCK
-bbbbbb12,Titan,30,EN STOCK
-cccccc12,Falling,30,EN STOCK
